@@ -21,3 +21,7 @@ python main.py
 ## Viewing The App
 
 Go to `http://127.0.0.1:5000`
+
+## Video do cara
+
+`https://www.youtube.com/watch?v=dam0GPOAvVI&ab_channel=TechWithTim`
