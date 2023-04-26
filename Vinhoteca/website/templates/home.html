@@ -1,6 +1,22 @@
 {% extends "base.html" %} {% block title %}Vinhoteca{% endblock %} {% block content
   %}
-  <h1 align="center">Meus Vinhos</h1>
+  <h1 align="center" style="margin-top: 20px; margin-bottom: 20px;">Meus Vinhos</h1>
+  <form method="POST">
+  </div>
+  <div align="center" style="margin-bottom: 20px;">
+    <button type="submit" name="add" class="btn btn-primary">Adicionar novo Vinho</button>
+    <button type="submit" name="register" class="btn btn-primary">Cadastrar novo Vinho</button>
+  
+  </div>
+    <div align="center"  >
+      <label for="nome">Nome: </label>
+      <input type="text" name="nome" id="nome"> </input>
+      <br />
+      <label for="nome">Safra: </label>
+      <input type="number" name="safra" id="safra"> </input>
+      <br />
+  </form>
+
   <ul class="list-group list-group-flush" id="vinhos">
     {% for vinho in user.vinhos %}
     <li class="list-group-item">
@@ -12,18 +28,6 @@
     </li>
     {% endfor %}
   </ul>
-  <form method="POST">
-    <div align="center">
-      <label for="nome">Nome: </label>
-      <input type="text" name="nome" id="nome"> </input>
-      <br />
-      <label for="nome">Safra: </label>
-      <input type="number" name="safra" id="safra"> </input>
-      <br />
-    </div>
-    <div align="center">
-      <button type="submit" class="btn btn-primary">Add Note</button>
-    </div>
-  </form>
+  
   {% endblock %}
   
