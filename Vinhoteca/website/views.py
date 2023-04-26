@@ -35,6 +35,11 @@ def home():
 def register():
       return render_template("wine_register.html", user=current_user)
 
+@views.route('/harmonizacao', methods=['GET', 'POST'])
+@login_required
+def pairing():
+        return render_template("wine_pairing.html", user=current_user)
+
 @views.route('/delete-vinho', methods=['POST'])
 def delete_vinho():  
     vinho = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
