@@ -18,6 +18,7 @@ def home():
         if 'add' in request.form:
             nome = request.form.get('nome')#Gets the note from the HTML 
             safra = request.form.get('safra')
+            tempodeguarda = request.form.get('tempodeguarda')
 
             if len(nome) < 1:
                 flash('Nome inválido!', category='error') 

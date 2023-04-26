@@ -14,6 +14,7 @@ class Vinho(db.Model):
     nome = db.Column(db.String(100))
     safra = db.Column(db.Integer)
     #data = db.Column(db.DateTime(timezone=True), default=func.now())
+    tempodeguarda = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class User(db.Model, UserMixin):

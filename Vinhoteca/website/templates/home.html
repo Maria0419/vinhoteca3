@@ -15,6 +15,9 @@
       <label for="nome">Safra: </label>
       <input type="number" name="safra" id="safra"> </input>
       <br />
+      <label for="tempodeguarda">Tempo de Guarda: </label>
+      <input type="number" name="tempodeguarda" id="tempodeguarda"> </input>
+      <br />
   </form>
 
   <ul class="list-group list-group-flush" id="vinhos">
@@ -22,6 +25,7 @@
     <li class="list-group-item">
       {{ vinho.nome }} </br>
       {{ vinho.safra }}
+      {{ vinho.tempodeguarda }}
       <button type="button" class="close" onClick="deleteVinho({{ vinho.id }})">
         <span aria-hidden="true">&times;</span>
       </button>
