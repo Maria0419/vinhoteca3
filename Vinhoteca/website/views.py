@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Note
 from .models import Vinhos
 from .models import Inventario
+from .models import Vinicola
 from . import db
 import json
 
@@ -12,7 +13,7 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-
+    vinhos = Vinhos.query.all()
     return render_template("home.html", user=current_user)
 
 
@@ -27,16 +28,17 @@ def register():
         if 'register' in request.form:
             nome = request.form.get('nome')#Gets the note from the HTML 
             safra = request.form.get('safra')
+            uva = request.form.get('uva')
             tempodeguarda = request.form.get('tempodeguarda')
             harmonizacao = request.form.get('harmonizacao')
-            
+                                    
             if len(nome) < 1:
                 flash('Nome inválido!', category='error') 
             else:
-                novo_vinho = Vinhos(nome=nome, safra=safra, tempodeguarda = tempodeguarda, harmonizacao=harmonizacao)  #providing the schema for the note 
+                novo_vinho = Vinhos(nome=nome, safra=safra, uva=uva, tempodeguarda = tempodeguarda, harmonizacao=harmonizacao)  #providing the schema for the note 
                 db.session.add(novo_vinho) #adding the note to the database 
                 db.session.commit()
-                flash('Vinho Adiconado!', category='success')
+                flash('Vinho Adicionado!', category='success')
     vinhos = Vinhos.query.all()
     return render_template("wine_register.html", vinhos=vinhos, user=current_user)
 

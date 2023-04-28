@@ -9,26 +9,25 @@ class Note(db.Model): #model
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+class Vinicola(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100))
+    regiao = db.Column(db.String(100))
+
 class Vinhos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100))
     safra = db.Column(db.Integer)
+    uva = db.Column(db.String(100))
     tempodeguarda = db.Column(db.Integer)
     harmonizacao = db.Column(db.String(100))
-    #adega_id = db.Column(db.String(100), db.ForeignKey('adega.id'))
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-vinho_inventario = db.Table('vinho_inventario',
-    db.Column('vinho_id', db.Integer, db.ForeignKey('vinhos.id'), primary_key=True),
-    db.Column('inventario_id', db.Integer, db.ForeignKey('inventario.id'), primary_key=True)
-)
+    vinicola_id = db.Column(db.Integer, db.ForeignKey('vinicola.id'))
 
 class Inventario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     localizacao = db.Column(db.String(100))
-    estoque = db.Column(db.Integer)
-    #vinho = db.relationship('Vinhos')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    vinho_id = db.Column(db.Integer, db.ForeignKey('vinhos.id'))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
