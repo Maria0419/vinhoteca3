@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Note
 from .models import Vinhos
 from .models import Inventario
 from .models import Vinicola
