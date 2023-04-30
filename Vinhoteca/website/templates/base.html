@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -18,32 +19,31 @@
     <title>{% block title %}Home{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #54252f; font-size: large; font-family: Verdana, Geneva, Tahoma, sans-serif;">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="#">
-        <img src="{{url_for('static', filename='logo_navbar.png')}}" />
+        <img src="{{url_for('static', filename='logo2.png')}}" width="70" height="70" />
       </a>
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav mr-auto">
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="home" href="/">Minha Adega</a>
-          <a class="nav-item nav-link" id="harmonizacao" href="/harmonizacao">Harmonização</a>
-          <a class="nav-item nav-link" id="register" href="/cadastro">Cadastrar Vinho</a>
+          <a class="nav-item nav-link" id="home" href="/" style="color: #fdebbb;">Minha Adega</a>
+          <a class="nav-item nav-link" id="harmonizacao" href="/harmonizacao" style="color: #fdebbb;">Harmonização</a>
+          <a class="nav-item nav-link" id="register" href="/cadastro" style="color: #fdebbb;">Cadastrar Vinho</a>
           {% else %}
-          <a class="nav-item nav-link" id="login" href="/login">Login</a>
-          <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+          <a class="nav-item nav-link" id="login" href="/login"style="color: #fdebbb;">Entrar</a>
+          <a class="nav-item nav-link" id="signUp" href="/sign-up"style="color: #fdebbb;">Cadastrarse</a>
           {% endif %}
         </div>
         <div class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          <a class="nav-item nav-link" id="logout" href="/logout"style="color: #fdebbb;">Sair</a>
           {% endif %}
         </div>
       </div>
     </nav>
-    
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
