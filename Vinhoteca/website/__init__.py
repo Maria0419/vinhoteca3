@@ -3,9 +3,16 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 
+
+
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
+class Config(object):
+    SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_NAME}'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_RECORD_QUERIES = True
 
 def create_app():
     app = Flask(__name__)
@@ -13,11 +20,11 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-    from .views import views
-    from .auth import auth
+    from .views import Views
+    from .auth import Auth
 
-    app.register_blueprint(views, url_prefix='/')
-    app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(Views.views, url_prefix='/')
+    app.register_blueprint(Auth.auth, url_prefix='/')
 
     from .models import User, Inventario, Vinhos, Vinicola
     
