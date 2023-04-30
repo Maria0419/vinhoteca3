@@ -2,22 +2,17 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-
+from .config import Config
 
 
 db = SQLAlchemy()
-DB_NAME = "database.db"
+DB_NAME = Config.DB_NAME
 
-class Config(object):
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_NAME}'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ECHO = True
-    SQLALCHEMY_RECORD_QUERIES = True
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'splashed_your_wine_into_me'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    
+    app.config.from_object(config.Config())
     db.init_app(app)
 
     from .views import Views
@@ -42,7 +37,3 @@ def create_app():
     return app
 
 
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Created Database!')
