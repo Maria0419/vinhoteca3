@@ -15,6 +15,34 @@ class Views:
         vinhos = Vinhos.query.all()
         return render_template("home.html", user=current_user)
 
+    def validate_wine(nome, safra, uva, tempodeguarda, harmonizacao):
+        if len(nome) < 1: # create a validate input function
+            flash('Nome inválido!', category='error')
+            return 0
+        
+        elif len(safra) < 4:
+            flash('Safra inválida!', category='error')
+            return 0
+        
+        elif len(uva) < 1:
+            flash('Uva inválida!', category='error')
+            return 0
+        
+        elif len(tempodeguarda) < 1:
+            flash('Tempo de guarda inválido!', category='error')
+            return 0
+        
+        elif len(harmonizacao) < 1:
+            flash('Harmonização inválida!', category='error')
+            return 0
+        
+        return 1
+    
+    def register_wine(nome, safra, uva, tempodeguarda, harmonizacao):
+        novo_vinho = Vinhos(nome=nome, safra=safra, uva=uva, tempodeguarda = tempodeguarda, harmonizacao=harmonizacao)  #providing the schema for the note 
+        db.session.add(novo_vinho) #adding the note to the database 
+        db.session.commit()
+        flash('Vinho Adicionado!', category='success')
 
     @views.route('/cadastro', methods=['GET', 'POST'])
     @login_required
@@ -29,18 +57,15 @@ class Views:
                 safra = request.form.get('safra')
                 uva = request.form.get('uva')
                 tempodeguarda = request.form.get('tempodeguarda')
-                harmonizacao = request.form.get('harmonizacao')
-                                        
-                if len(nome) < 1:
-                    flash('Nome inválido!', category='error') 
-                else:
-                    novo_vinho = Vinhos(nome=nome, safra=safra, uva=uva, tempodeguarda = tempodeguarda, harmonizacao=harmonizacao)  #providing the schema for the note 
-                    db.session.add(novo_vinho) #adding the note to the database 
-                    db.session.commit()
-                    flash('Vinho Adicionado!', category='success')
+                harmonizacao = request.form.get('harmonizacao')                        
+                
+                if Views.validate_wine(nome,safra,uva,tempodeguarda,harmonizacao):
+                    Views.register_wine(nome,safra,uva,tempodeguarda,harmonizacao)
+
         vinhos = Vinhos.query.all()
         return render_template("wine_register.html", vinhos=vinhos, user=current_user)
-
+    
+    
     @views.route('/harmonizacao', methods=['GET', 'POST'])
     @login_required
     def pairing():
