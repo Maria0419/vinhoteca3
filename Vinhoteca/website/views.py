@@ -89,3 +89,8 @@ class Views:
                 db.session.commit()
 
         return jsonify({})
+
+    @views.route('/adicionar', methods=['GET', 'POST'])
+    @login_required
+    def add_wine():
+        return render_template("add_wine.html", user=current_user)
