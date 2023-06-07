@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 from .models import Vinhos
 from .models import Inventario
 from .models import Vinicola
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 from . import db
 import json
 
@@ -64,19 +66,23 @@ class Views:
 
         vinhos = Vinhos.query.all()
         return render_template("wine_register.html", vinhos=vinhos, user=current_user)
-    
-    
+
     @views.route('/harmonizacao', methods=['GET', 'POST'])
     @login_required
     def pairing():
-            if request.method == 'POST': 
-
-                if 'harmonize' in request.form:
-                    harmonizacao = request.form.get('harmonizacao')
-                    vinhos = Vinhos.query.filter_by(harmonizacao=harmonizacao)
-                    return render_template("wine_pairing.html", vinhos=vinhos, user=current_user)
+        if request.method == 'POST': 
+            if 'harmonize' in request.form:
+                harmonizacao = request.form.get('harmonizacao')
+                vinhos = Vinhos.query.all()
             
-            return render_template("wine_pairing.html", vinhos=None, user=current_user)
+                resultados = process.extract(harmonizacao, [vinho.harmonizacao for vinho in vinhos], scorer=fuzz.token_set_ratio, limit=None)
+            
+                vinhos_encontrados = [vinho for resultado, vinho in zip(resultados, vinhos) if resultado[1] >= 70]
+            
+                return render_template("wine_pairing.html", vinhos=vinhos_encontrados, user=current_user)
+    
+        return render_template("wine_pairing.html", vinhos=None, user=current_user)
+
 
     @views.route('/delete-vinho', methods=['POST'])
     def delete_vinho():  
