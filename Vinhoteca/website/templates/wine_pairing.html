@@ -1,13 +1,33 @@
 {% extends "base.html" %} {% block title %}Harmonização{% endblock %} {% block content
     %}
 <h1 align="center" style="padding-top: 30px; padding-bottom: 30px;">Harmonização</h1>
-    
-<div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="O que quero comer hoje?" aria-label="Recipient's username" aria-describedby="basic-addon2">
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Harmonize!</button>
-    </div>
-  </div>
 
+<form method="POST">
+  <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="O que quero comer hoje?" aria-label="Recipient's username" aria-describedby="basic-addon2" name="harmonizacao" id="harmonizacao">
+      <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit" name="harmonize">Harmonize!</button>
+      </div>
+  </div>
+</form>
+
+
+{% if vinhos is not none %}
+  <div class="row">
+    {% for vinho in vinhos %}
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="card-body">
+            <h5 class="card-title">{{ vinho.nome }}</h5>
+            <p class="card-text">Safra: {{ vinho.safra }}</p>
+            <p class="card-text">Uva: {{ vinho.uva }}</p>
+            <p class="card-text">Tempo de Guarda: {{ vinho.tempodeguarda }}</p>
+            <p class="card-text">Harmonização: {{ vinho.harmonizacao }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
 
 {% endblock %}

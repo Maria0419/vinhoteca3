@@ -49,7 +49,7 @@ class Views:
     def register():
         if request.method == 'POST': 
             
-            if 'add' in request.form: 
+            if 'add' in request.form:
                 return redirect(url_for('views.home'))
             
             if 'register' in request.form:
@@ -69,7 +69,14 @@ class Views:
     @views.route('/harmonizacao', methods=['GET', 'POST'])
     @login_required
     def pairing():
-            return render_template("wine_pairing.html", user=current_user)
+            if request.method == 'POST': 
+
+                if 'harmonize' in request.form:
+                    harmonizacao = request.form.get('harmonizacao')
+                    vinhos = Vinhos.query.filter_by(harmonizacao=harmonizacao)
+                    return render_template("wine_pairing.html", vinhos=vinhos, user=current_user)
+            
+            return render_template("wine_pairing.html", vinhos=None, user=current_user)
 
     @views.route('/delete-vinho', methods=['POST'])
     def delete_vinho():  
