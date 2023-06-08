@@ -8,6 +8,7 @@ from fuzzywuzzy import process
 from . import db
 import json
 import csv
+from sqlalchemy import or_
 
 class Views:
     views = Blueprint('views', __name__)
@@ -15,8 +16,12 @@ class Views:
     @views.route('/', methods=['GET', 'POST'])
     @login_required
     def home():
-        vinhos = Vinhos.query.all()
-        return render_template("home.html", user=current_user)
+        inventarios_usuario = Inventario.query.filter_by(user_id=current_user.id).all()
+
+        vinhos_ids_distintos = set(inventario.vinho_id for inventario in inventarios_usuario)
+        vinhos_inventario = Vinhos.query.filter(Vinhos.id.in_(vinhos_ids_distintos)).all()
+
+        return render_template("home.html", vinhos=vinhos_inventario, inventario=inventarios_usuario, user=current_user)
 
     def validate_wine(nome, safra, uva, tempodeguarda, harmonizacao):
         if len(nome) < 1: # create a validate input function
@@ -105,10 +110,13 @@ class Views:
                 print(vinho_id)
                 localizacao = request.form.get('localizacao')
                 quantidade = request.form.get('quantidade')
-                print(localizacao)
-                print(quantidade)
+                print(current_user)
+
+                novo_inventario = Inventario(localizacao=localizacao, quantidade=quantidade, user_id=current_user.id, vinho_id=vinho_id)  #providing the schema for the note 
+                db.session.add(novo_inventario) #adding the note to the database 
+                db.session.commit()
 
                 flash('Vinho Adicionado!', category='success')
-                return render_template("home.html", user=current_user)
+                return redirect(url_for('views.home'))
 
         return render_template("add_wine.html", user=current_user)

@@ -20,6 +20,7 @@ class Vinhos(db.Model):
 class Inventario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     localizacao = db.Column(db.String(100))
+    quantidade = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     vinho_id = db.Column(db.Integer, db.ForeignKey('vinhos.id'))
 

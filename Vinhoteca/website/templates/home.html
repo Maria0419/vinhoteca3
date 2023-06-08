@@ -1,6 +1,29 @@
 {% extends "base.html" %} {% block title %}Vinhoteca{% endblock %} {% block content
   %}
 <h1 align="center" style="padding-top: 30px; padding-bottom: 30px;">Minha Adega</h1>
+
+<div class="row mt-4">
+  {% for inventarios in inventario %}
+    {% for vinho in vinhos %}
+      {% if vinho.id == inventarios.vinho_id %}
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <div class="card-body">
+              <h5 class="card-title">{{ vinho.nome }}</h5>
+              <p class="card-text">Safra: {{ vinho.safra }}</p>
+              <p class="card-text">Uva: {{ vinho.uva }}</p>
+              <p class="card-text">Tempo de Guarda: {{ vinho.tempodeguarda }}</p>
+              <p class="card-text">Harmonização: {{ vinho.harmonizacao }}</p>
+              <p class="card-text">Quantidade: {{ inventarios.quantidade }}</p>
+              <p class="card-text">Localização: {{ inventarios.localizacao }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+  {% endfor %}
+</div>
+
 <!--
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
