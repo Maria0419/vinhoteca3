@@ -1,27 +1,6 @@
 {% extends "base.html" %} {% block title %}Cadastro{% endblock %} {% block content
     %}
-    <!--<h1 align="center" style="margin-top: 20px; margin-bottom: 20px;">Cadastrar Novo Vinho</h1>
-    <form method="POST">
-      <div align="center"  >
-        <label for="nome">Nome: </label>
-        <input type="text" name="nome" id="nome"> </input>
-        <br />
-        <label for="safra">Safra: </label>
-        <input type="number" name="safra" id="safra"> </input>
-        <br />
-        <label for="tempodeguarda">Tempo de Guarda: </label>
-        <input type="number" name="tempodeguarda" id="tempodeguarda"> </input>
-        <br />
-        <label for="harmonizacao">Harmonização: </label>
-        <input type="text" name="harmonizacao" id="harmonizacao"> </input>
-        <br />
-
-    </div>
-    <div align="center" style="margin-bottom: 20px;">
-        <button type="submit" name="register" class="btn btn-primary">Cadastrar</button>
-    </div>
-    </form>-->
-    
+   
     <div class="card mx-auto" style="max-width: 600px; margin-bottom: 20px; margin-top: 20px;">
         <h5 class="card-header text-center">Cadastrar Novo Vinho</h5>
         <div class="card-body">
@@ -53,8 +32,16 @@
         </div>
       </div>
       
+      <form method="POST">
+        <div class="input-group mb-3 d-flex justify-content-center" style="margin-bottom: 50px; margin-top: 50px;">
+            <input type="text" class="form-control" style="max-width: 700px;" placeholder="Que vinho deseja?" aria-label="Recipient's username" aria-describedby="basic-addon2" name="procura_vinho" id="procura_vinho">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit" name="procura">Procurar</button>
+            </div>
+        </div>
+      </form>
   
-    <div class="row">
+    <div class="row mt-4">
         {% for vinho in vinhos %}
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">

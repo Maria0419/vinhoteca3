@@ -65,6 +65,11 @@ class Views:
                 if Views.validate_wine(nome,safra,uva,tempodeguarda,harmonizacao):
                     Views.register_wine(nome,safra,uva,tempodeguarda,harmonizacao)
 
+            if 'procura' in request.form:
+                nome = request.form.get('procura_vinho')
+                vinhos = Vinhos.query.filter(Vinhos.nome.ilike(f'%{nome}%'))
+                return render_template("wine_register.html", vinhos=vinhos, user=current_user)
+
         vinhos = Vinhos.query.all()
         return render_template("wine_register.html", vinhos=vinhos, user=current_user)
 
