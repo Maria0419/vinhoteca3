@@ -16,9 +16,44 @@
               <p class="card-text">Harmonização: {{ vinho.harmonizacao }}</p>
               <p class="card-text">Quantidade: {{ inventarios.quantidade }}</p>
               <p class="card-text">Localização: {{ inventarios.localizacao }}</p>
+
+              <!-- Dentro do loop que itera sobre os vinhos -->
+              <form id="edit-form-{{ vinho.id }}" class="edit-form" style="display: none;" method="POST" action="{{ url_for('views.editar_vinho', vinho_id=vinho.id) }}">
+                <!-- Campo de edição da quantidade -->
+                <label for="editquantidade">Editar Quantidade:</label>
+                <input type="number" name="quantidade" value="{{ inventario.quantidade }}">
+                <!-- Campo de edição da localização -->
+                <label for="editlocalizacao">Editar Localização:</label>
+                <input type="text" name="localizacao" value="{{ inventario.localizacao }}">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+              </form>
+              <button class="btn btn-info edit-button" data-form="edit-form-{{ vinho.id }}">Editar</button>
+
+              <script>
+                // Função para exibir/ocultar o formulário de edição
+                function toggleEditForm(formId) {
+                    var form = document.getElementById(formId);
+                    if (form.style.display === "none") {
+                        form.style.display = "block";
+                    } else {
+                        form.style.display = "none";
+                    }
+                }
+
+                // Adiciona os eventos de clique para cada botão de edição
+                var editButtons = document.getElementsByClassName("edit-button");
+                for (var i = 0; i < editButtons.length; i++) {
+                    var button = editButtons[i];
+                    var formId = button.getAttribute("data-form");
+                    button.addEventListener("click", function() {
+                        toggleEditForm(formId);
+                    });
+                }
+              </script>
+
               <form method="POST" action="{{ url_for('views.remover_vinho', vinho_id=vinho.id) }}">
                 <button type="submit" class="btn btn-danger">Remover</button>
-            </form>
+              </form>
             </div>
           </div>
         </div>
