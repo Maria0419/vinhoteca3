@@ -16,6 +16,9 @@
               <p class="card-text">Harmonização: {{ vinho.harmonizacao }}</p>
               <p class="card-text">Quantidade: {{ inventarios.quantidade }}</p>
               <p class="card-text">Localização: {{ inventarios.localizacao }}</p>
+              <form method="POST" action="{{ url_for('views.remover_vinho', vinho_id=vinho.id) }}">
+                <button type="submit" class="btn btn-danger">Remover</button>
+            </form>
             </div>
           </div>
         </div>

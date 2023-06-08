@@ -120,3 +120,15 @@ class Views:
                 return redirect(url_for('views.home'))
 
         return render_template("add_wine.html", user=current_user)
+
+    @views.route('/remover_vinho/<int:vinho_id>', methods=['POST'])
+    @login_required
+    def remover_vinho(vinho_id):
+        inventario = Inventario.query.filter_by(user_id=current_user.id, vinho_id=vinho_id).first()
+
+        if inventario:
+            db.session.delete(inventario)
+            db.session.commit()
+            flash('Vinho removido do inventário com sucesso.', 'success')
+
+        return redirect(url_for('views.home'))
