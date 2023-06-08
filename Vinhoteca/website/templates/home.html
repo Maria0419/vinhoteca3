@@ -25,8 +25,9 @@
                 <!-- Campo de edição da localização -->
                 <label for="editlocalizacao">Editar Localização:</label>
                 <input type="text" name="localizacao">
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button> 
               </form>
+
               <button class="btn btn-info edit-button" onclick="toggleEditForm('edit-form-{{ vinho.id }}-{{ inventario.id }}')">Editar</button>
 
               <script>
@@ -42,7 +43,7 @@
               </script>
 
               <form method="POST" action="{{ url_for('views.remover_vinho', vinho_id=vinho.id, inventario_id=inventario.id) }}">
-                <button type="submit" class="btn btn-danger">Remover</button>
+                <button type="submit" class="btn btn-danger mt-2">Remover</button>
               </form>
 
             </div>
