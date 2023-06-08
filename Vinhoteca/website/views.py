@@ -7,6 +7,7 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from . import db
 import json
+import csv
 
 class Views:
     views = Blueprint('views', __name__)
@@ -64,6 +65,11 @@ class Views:
                 if Views.validate_wine(nome,safra,uva,tempodeguarda,harmonizacao):
                     Views.register_wine(nome,safra,uva,tempodeguarda,harmonizacao)
 
+            if 'procura' in request.form:
+                nome = request.form.get('procura_vinho')
+                vinhos = Vinhos.query.filter(Vinhos.nome.ilike(f'%{nome}%'))
+                return render_template("wine_register.html", vinhos=vinhos, user=current_user)
+
         vinhos = Vinhos.query.all()
         return render_template("wine_register.html", vinhos=vinhos, user=current_user)
 
@@ -73,13 +79,8 @@ class Views:
         if request.method == 'POST': 
             if 'harmonize' in request.form:
                 harmonizacao = request.form.get('harmonizacao')
-                vinhos = Vinhos.query.all()
-            
-                resultados = process.extract(harmonizacao, [vinho.harmonizacao for vinho in vinhos], scorer=fuzz.token_set_ratio, limit=None)
-            
-                vinhos_encontrados = [vinho for resultado, vinho in zip(resultados, vinhos) if resultado[1] >= 70]
-            
-                return render_template("wine_pairing.html", vinhos=vinhos_encontrados, user=current_user)
+                vinhos = Vinhos.query.filter(Vinhos.harmonizacao.ilike(f'%{harmonizacao}%'))
+                return render_template("wine_pairing.html", vinhos=vinhos, user=current_user)
     
         return render_template("wine_pairing.html", vinhos=None, user=current_user)
 
