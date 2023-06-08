@@ -3,9 +3,9 @@
 <h1 align="center" style="padding-top: 30px; padding-bottom: 30px;">Minha Adega</h1>
 
 <div class="row mt-4">
-  {% for inventarios in inventario %}
-    {% for vinho in vinhos %}
-      {% if vinho.id == inventarios.vinho_id %}
+  {% for vinho in vinhos %}
+    {% for inventario in inventario %}
+      {% if vinho.id == inventario.vinho_id %}
         <div class="col-md-4">
           <div class="card mb-4 box-shadow">
             <div class="card-body">
@@ -14,20 +14,20 @@
               <p class="card-text">Uva: {{ vinho.uva }}</p>
               <p class="card-text">Tempo de Guarda: {{ vinho.tempodeguarda }}</p>
               <p class="card-text">Harmonização: {{ vinho.harmonizacao }}</p>
-              <p class="card-text">Quantidade: {{ inventarios.quantidade }}</p>
-              <p class="card-text">Localização: {{ inventarios.localizacao }}</p>
+              <p class="card-text">Quantidade: {{ inventario.quantidade }}</p>
+              <p class="card-text">Localização: {{ inventario.localizacao }}</p>
 
-              <!-- Dentro do loop que itera sobre os vinhos -->
-              <form id="edit-form-{{ vinho.id }}" class="edit-form" style="display: none;" method="POST" action="{{ url_for('views.editar_vinho', vinho_id=vinho.id) }}">
+              <!-- Dentro do loop que itera sobre os inventários -->
+              <form id="edit-form-{{ vinho.id }}-{{ inventario.id }}" class="edit-form" style="display: none;" method="POST" action="{{ url_for('views.editar_vinho', vinho_id=vinho.id, inventario_id=inventario.id) }}">
                 <!-- Campo de edição da quantidade -->
                 <label for="editquantidade">Editar Quantidade:</label>
-                <input type="number" name="quantidade" value="{{ inventario.quantidade }}">
+                <input type="number" name="quantidade">
                 <!-- Campo de edição da localização -->
                 <label for="editlocalizacao">Editar Localização:</label>
-                <input type="text" name="localizacao" value="{{ inventario.localizacao }}">
+                <input type="text" name="localizacao">
                 <button type="submit" class="btn btn-primary">Salvar</button>
               </form>
-              <button class="btn btn-info edit-button" onclick="toggleEditForm('edit-form-{{ vinho.id }}')">Editar</button>
+              <button class="btn btn-info edit-button" onclick="toggleEditForm('edit-form-{{ vinho.id }}-{{ inventario.id }}')">Editar</button>
 
               <script>
                 // Função para exibir/ocultar o formulário de edição
@@ -39,31 +39,22 @@
                     form.style.display = "none";
                   }
                 }
-              
-                // Adiciona os eventos de clique para cada botão de edição
-                var editButtons = document.getElementsByClassName("edit-button");
-                for (var i = 0; i < editButtons.length; i++) {
-                  (function () {
-                    var button = editButtons[i];
-                    var formId = button.getAttribute("data-form");
-                    button.addEventListener("click", function () {
-                      toggleEditForm(formId);
-                    });
-                  })();
-                }
               </script>
-              
 
-              <form method="POST" action="{{ url_for('views.remover_vinho', vinho_id=vinho.id) }}">
+              <form method="POST" action="{{ url_for('views.remover_vinho', vinho_id=vinho.id, inventario_id=inventario.id) }}">
                 <button type="submit" class="btn btn-danger">Remover</button>
               </form>
+
             </div>
           </div>
         </div>
-        {% endif %}
+      {% endif %}
     {% endfor %}
   {% endfor %}
 </div>
+
+
+
 
 <!--
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
