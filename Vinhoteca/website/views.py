@@ -97,7 +97,18 @@ class Views:
 
         return jsonify({})
 
-    @views.route('/adicionar', methods=['GET', 'POST'])
+    @views.route('/adicionar/<int:vinho_id>', methods=['GET', 'POST'])
     @login_required
-    def add_wine():
+    def add_wine(vinho_id):
+        if request.method == 'POST':
+            if 'addvinho' in request.form:
+                print(vinho_id)
+                localizacao = request.form.get('localizacao')
+                quantidade = request.form.get('quantidade')
+                print(localizacao)
+                print(quantidade)
+
+                flash('Vinho Adicionado!', category='success')
+                return render_template("home.html", user=current_user)
+
         return render_template("add_wine.html", user=current_user)
