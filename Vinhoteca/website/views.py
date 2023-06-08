@@ -121,22 +121,25 @@ class Views:
 
         return render_template("add_wine.html", user=current_user)
 
-    @views.route('/remover_vinho/<int:vinho_id>', methods=['POST'])
+    @views.route('/remover_vinho/<int:vinho_id>/<int:inventario_id>', methods=['POST'])
     @login_required
-    def remover_vinho(vinho_id):
-        inventario = Inventario.query.filter_by(user_id=current_user.id, vinho_id=vinho_id).first()
+    def remover_vinho(vinho_id, inventario_id):
+        inventario = Inventario.query.filter_by(user_id=current_user.id, vinho_id=vinho_id, id=inventario_id).first()
 
         if inventario:
             db.session.delete(inventario)
             db.session.commit()
             flash('Vinho removido do inventário com sucesso.', 'success')
+        else:
+            flash('Vinho não encontrado no inventário.', 'error')
 
         return redirect(url_for('views.home'))
+
     
-    @views.route('/editar_vinho/<int:vinho_id>', methods=['POST'])
+    @views.route('/editar_vinho/<int:vinho_id>/<int:inventario_id>', methods=['POST'])
     @login_required
-    def editar_vinho(vinho_id):
-        inventario = Inventario.query.filter_by(user_id=current_user.id, vinho_id=vinho_id).first()
+    def editar_vinho(vinho_id, inventario_id):
+        inventario = Inventario.query.filter_by(id=inventario_id, vinho_id=vinho_id, user_id=current_user.id).first()
 
         if inventario:
             quantidade = request.form.get('quantidade')
@@ -154,3 +157,4 @@ class Views:
             flash('Vinho não encontrado no inventário.', 'error')
 
         return redirect(url_for('views.home'))
+
