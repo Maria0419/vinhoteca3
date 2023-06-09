@@ -17,6 +17,8 @@ class Vinhos(db.Model):
     harmonizacao = db.Column(db.String(100))
     vinicola_id = db.Column(db.Integer, db.ForeignKey('vinicola.id'))
 
+    vinicola = db.relationship('Vinicola', backref=db.backref('vinhos', lazy=True))
+
 class Inventario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     localizacao = db.Column(db.String(100))

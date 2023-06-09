@@ -51,6 +51,8 @@
                 <p class="card-text">Uva: {{ vinho.uva }}</p>
                 <p class="card-text">Tempo de Guarda: {{ vinho.tempodeguarda }}</p>
                 <p class="card-text">Harmonização: {{ vinho.harmonizacao }}</p>
+                <p class="card-text">Vinícola: {{ vinho.vinicola.nome }}</p>
+                <p class="card-text">Região: {{ vinho.vinicola.regiao }}</p>
                 <a href="{{url_for('views.add_wine', vinho_id=vinho.id)}}" class="btn btn-dark">Adicionar a Minha Adega</a>
               </div>
             </div>
