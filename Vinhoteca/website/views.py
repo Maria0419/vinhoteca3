@@ -46,11 +46,28 @@ class Views:
         
         return 1
     
+    """"
     def register_wine(nome, safra, uva, tempodeguarda, harmonizacao):
         novo_vinho = Vinhos(nome=nome, safra=safra, uva=uva, tempodeguarda = tempodeguarda, harmonizacao=harmonizacao)  #providing the schema for the note 
         db.session.add(novo_vinho) #adding the note to the database 
         db.session.commit()
+        flash('Vinho Adicionado!', category='success') """
+
+    def register_wine(nome, safra, uva, tempodeguarda, harmonizacao, vinicola_nome, vinicola_regiao):
+        vinicola = Vinicola.query.filter_by(nome=vinicola_nome).first()
+        if vinicola:
+            vinicola_id = vinicola.id
+        else:
+            nova_vinicola = Vinicola(nome=vinicola_nome, regiao=vinicola_regiao)
+            db.session.add(nova_vinicola)
+            db.session.commit()
+            vinicola_id = nova_vinicola.id
+    
+        novo_vinho = Vinhos(nome=nome, safra=safra, uva=uva, tempodeguarda=tempodeguarda, harmonizacao=harmonizacao, vinicola_id=vinicola_id)
+        db.session.add(novo_vinho)
+        db.session.commit()
         flash('Vinho Adicionado!', category='success')
+
 
     @views.route('/cadastro', methods=['GET', 'POST'])
     @login_required
@@ -65,10 +82,12 @@ class Views:
                 safra = request.form.get('safra')
                 uva = request.form.get('uva')
                 tempodeguarda = request.form.get('tempodeguarda')
-                harmonizacao = request.form.get('harmonizacao')                        
+                harmonizacao = request.form.get('harmonizacao')   
+                vinicola_nome = request.form.get('vinicola.nome')     
+                vinicola_regiao = request.form.get('vinicola.regiao')                
                 
                 if Views.validate_wine(nome,safra,uva,tempodeguarda,harmonizacao):
-                    Views.register_wine(nome,safra,uva,tempodeguarda,harmonizacao)
+                    Views.register_wine(nome,safra,uva,tempodeguarda,harmonizacao,vinicola_nome,vinicola_regiao)
 
             if 'procura' in request.form:
                 nome = request.form.get('procura_vinho')
