@@ -21,6 +21,12 @@ class Views:
         vinhos_ids_distintos = set(inventario.vinho_id for inventario in inventarios_usuario)
         vinhos_inventario = Vinhos.query.filter(Vinhos.id.in_(vinhos_ids_distintos)).all()
 
+        if request.method == 'POST': 
+            if 'buscar' in request.form:
+                    nome = request.form.get('buscar')
+                    vinhos = Vinhos.query.filter(Vinhos.nome.ilike(f'%{nome}%'))
+                    return render_template("home.html", vinhos=vinhos, inventario=inventarios_usuario, user=current_user)
+
         return render_template("home.html", vinhos=vinhos_inventario, inventario=inventarios_usuario, user=current_user)
 
     def validate_wine(nome, safra, uva, tempodeguarda, harmonizacao):

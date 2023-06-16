@@ -2,6 +2,15 @@
   %}
 <h1 align="center" style="padding-top: 30px; padding-bottom: 30px;">Minha Adega</h1>
 
+<form method="POST">
+  <div class="input-group mb-3 d-flex justify-content-center" style="margin-bottom: 50px; margin-top: 50px;">
+      <input type="text" class="form-control" style="max-width: 700px;" placeholder="Buscar na Minha Adega..." aria-label="Recipient's username" aria-describedby="basic-addon2" name="buscar" id="buscar">
+      <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit" name="buscar">Procurar</button>
+      </div>
+  </div>
+</form>
+
 <div class="row mt-4">
   {% for vinho in vinhos %}
     {% for inventario in inventario %}
