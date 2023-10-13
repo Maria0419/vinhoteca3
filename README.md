@@ -37,20 +37,20 @@ to customers who arrive without know a lot about wines.
 
 # Login Page
 
-![Alt Text](images/login.png)
+![Alt Text](image/login.png)
 
 # Sign-in Page
 
-![Alt Text](images/reg.png)
+![Alt Text](image/reg.png)
 
 # My wine cellar
 
-![Alt Text](images/cellar.png)
+![Alt Text](image/cellar.png)
 
 # New wine registration page
 
-![Alt Text](images/newwine.png)
+![Alt Text](image/newwine.png)
 
 # Wine pairing page
 
-![Alt Text](images/pairing.png)
+![Alt Text](image/pairing.png)
